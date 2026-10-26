@@ -180,7 +180,59 @@ def update_products(source: str) -> tuple[str, list[dict[str, object]]]:
             product["has_images"] = True
             product["images"] = override
     replacement = f"const productsData = {json.dumps(products, ensure_ascii=False)};\n"
-    return source[:match.start()] + replacement + source[match.end():], products
+    output = source[:match.start()] + replacement + source[match.end():]
+    return apply_model_grouping(output), products
+
+
+def apply_model_grouping(html: str) -> str:
+    """Presenta una tarjeta por modelo sin cambiar las variantes fuente."""
+    grouping = '''const catalogProducts = Object.values(productsData.reduce((groups, product) => {
+            const key = `${product.brand}:${product.model}`;
+            const grouped = groups[key] || {
+                ...product,
+                colors: [],
+                images: [],
+                has_images: false,
+            };
+            if (!grouped.colors.includes(product.color)) grouped.colors.push(product.color);
+            product.images.forEach((image) => {
+                if (!grouped.images.includes(image)) grouped.images.push(image);
+            });
+            grouped.has_images = grouped.images.length > 0;
+            groups[key] = grouped;
+            return groups;
+        }, {}));
+        '''
+    anchor = '        const STORE_WHATSAPP = "5218781012084";'
+    if anchor not in html:
+        raise RuntimeError("No se encontró el punto de inserción para agrupar el catálogo.")
+    html = html.replace(anchor, f"        {grouping}\n{anchor}", 1)
+
+    replacements = (
+        ("card.dataset.color = item.color.toLowerCase();", "card.dataset.color = item.colors.join(' ').toLowerCase();"),
+        ("getShoeSvg(item.category, item.color)", "getShoeSvg(item.category, item.colors[0])"),
+        ("const modelColors = [...new Set(productsData.filter(p => p.model === item.model).map(p => p.color))];", "const modelColors = item.colors;"),
+        ("Hola, me interesa comprar el modelo ${item.brand} ${item.name} (${item.model}) en color ${item.color} que vi en el Catálogo de Piedras Negras.", "Hola, me interesa comprar el modelo ${item.brand} ${item.name} (${item.model}) que vi en el Catálogo de Piedras Negras. ¿Me comparten disponibilidad y colores?"),
+        ("const filtered = productsData.filter(item => {", "const filtered = catalogProducts.filter(item => {"),
+        ("item.color.toLowerCase().includes(query);", "item.colors.some(color => color.toLowerCase().includes(query));"),
+        ("resultsCount.textContent = `${count} producto${count !== 1 ? 's' : ''} encontrado${count !== 1 ? 's' : ''}`;", "resultsCount.textContent = `${count} modelo${count !== 1 ? 's' : ''} encontrado${count !== 1 ? 's' : ''}`;"),
+        ("`SKU: ${item.model} • Color: ${item.color}`", "`SKU: ${item.model} • ${item.colors.length} color${item.colors.length !== 1 ? 'es' : ''} disponible${item.colors.length !== 1 ? 's' : ''}`"),
+        ("<div class=\"detail-row\"><span class=\"detail-label\">Color</span><span class=\"detail-value\">${item.color}</span></div>", "<div class=\"detail-row\"><span class=\"detail-label\">Colores</span><span class=\"detail-value\">${item.colors.join(', ')}</span></div>"),
+    )
+    for old, new in replacements:
+        count = html.count(old)
+        if count == 0:
+            raise RuntimeError(f"No se encontró el fragmento para actualizar: {old}")
+        html = html.replace(old, new)
+
+    old_colors = '''<span class="colors-label">Colores del modelo:</span>
+                            ${swatchesHtml}'''
+    new_colors = '''<span class="colors-label">Colores en inventario:</span>
+                            ${swatchesHtml}
+                            <span style="font-size:0.72rem; color:#64748B; margin-left:0.35rem;">${modelColors.join(' · ')}</span>'''
+    if old_colors not in html:
+        raise RuntimeError("No se encontró la sección de colores de la tarjeta.")
+    return html.replace(old_colors, new_colors)
 
 
 def build() -> None:
@@ -206,6 +258,7 @@ def build() -> None:
     summary = {
         "inventory_variants": len(products),
         "inventory_models": len({product["model"] for product in products}),
+        "published_cards": len({product["model"] for product in products}),
         "products_with_real_images": sum(bool(product["images"]) for product in products),
         "referenced_image_paths": len(referenced),
         "unique_referenced_images": len(set(referenced)),

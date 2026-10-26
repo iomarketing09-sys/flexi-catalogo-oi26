@@ -6,7 +6,8 @@ para GitHub Pages.
 
 ## Contenido
 
-- 75 variantes de inventario confirmado, correspondientes a 54 modelos.
+- 75 variantes de inventario confirmado, presentadas como 54 tarjetas: una
+  por modelo, con todos sus colores disponibles indicados en la misma tarjeta.
 - Filtros por marca, categoría y temporada; buscador por modelo o nombre.
 - Enlace de consulta por WhatsApp desde cada producto.
 - Fotografías de producto optimizadas para web; los modelos sin foto real

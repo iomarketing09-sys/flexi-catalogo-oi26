@@ -22,6 +22,10 @@ def main() -> None:
     products = json.loads(match.group(1))
     if len(products) != 75 or len({product["model"] for product in products}) != 54:
         raise RuntimeError("El inventario publicado no coincide con 75 variantes / 54 modelos.")
+    if "const catalogProducts = Object.values(productsData.reduce" not in html:
+        raise RuntimeError("El catálogo no está agrupado en una tarjeta por modelo.")
+    if "const filtered = catalogProducts.filter(item =>" not in html:
+        raise RuntimeError("Los filtros no usan el catálogo agrupado.")
 
     references: set[Path] = set()
     for product in products:
@@ -48,6 +52,7 @@ def main() -> None:
     summary = {
         "inventory_variants": len(products),
         "inventory_models": len({product["model"] for product in products}),
+        "published_cards": len({product["model"] for product in products}),
         "referenced_image_paths": len(references),
         "asset_megabytes": round(total_bytes / 1024 / 1024, 2),
         "result": "ok",
