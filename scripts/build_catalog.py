@@ -23,15 +23,28 @@ GROWTH_OS = REPO.parent
 SOURCE_HTML = GROWTH_OS / "tenants/flexi/catalogo_flexi_oi26_enriquecido.html"
 SOURCE_SEAL = GROWTH_OS / "tenants/flexi/sello_dorado_oi26.svg"
 DRIVE = Path("/home/universe-sent-me/GoogleDrive/Informes FLEXI")
-MISSING = DRIVE / "assets faltantes "
 FLEXI_OI26 = DRIVE / "marketing/Flexi/Campaña OI26/FOTOS OI26 FINALES"
 QUIRELLI_OI26 = DRIVE / "marketing/Quirelli/Campaña OI26/Campaña"
 COUNTRY = DRIVE / "marketing/Flexi/Campaña Country OI26/- PORTADILLAS OI26"
+CATALOG_DRIVE = DRIVE / "Catalogo"
+MISSING = CATALOG_DRIVE / "assets faltantes "
+NEW_OI26 = CATALOG_DRIVE / "Assets Faltantes Campaña OI26"
+CLASSIC = CATALOG_DRIVE / "Assets Flexi Linea Clasica"
 
 ANGLE_ORDER = (
     "ARRIBA_PAR",
     "ABAJO_PAR",
     "DER_PAR",
+    "IZQ",
+    "DER",
+    "LATERAL",
+    "INTERIOR",
+    "ADELANTE",
+    "ATRAS",
+)
+EIGHT_VIEW_ORDER = (
+    "ARRIBA",
+    "ABAJO",
     "IZQ",
     "DER",
     "LATERAL",
@@ -76,8 +89,15 @@ def add_path(images: dict[tuple[str, str], dict[str, Path | bytes]], brand: str,
     images.setdefault((brand, model), {})[name] = source
 
 
-def add_zip_series(images: dict[tuple[str, str], dict[str, Path | bytes]], brand: str, model: str, color: str, archive: Path) -> None:
-    for number, angle in enumerate(ANGLE_ORDER, start=1):
+def add_zip_series(
+    images: dict[tuple[str, str], dict[str, Path | bytes]],
+    brand: str,
+    model: str,
+    color: str,
+    archive: Path,
+    angles: tuple[str, ...] = ANGLE_ORDER,
+) -> None:
+    for number, angle in enumerate(angles, start=1):
         add_path(images, brand, model, f"{model}_{color}_{number}.jpg", image_bytes_from_zip(archive, angle))
 
 
@@ -134,8 +154,32 @@ def source_images() -> dict[tuple[str, str], dict[str, Path | bytes]]:
         ("Flexi", "423803", "marino", MISSING / "423803_MARINO-20260105T195709Z-3-001.zip"),
         ("Quirelli", "707205", "negro", MISSING / "707205_NEGRO-20260105T162309Z-3-001.zip"),
         ("Quirelli", "707902", "negro", MISSING / "707902_NEGRO.zip"),
+        ("Flexi", "101912", "negro", NEW_OI26 / "101912_NEGRO.zip"),
+        ("Flexi", "117207", "negro", NEW_OI26 / "117207_NEGRO.zip", EIGHT_VIEW_ORDER),
+        ("Flexi", "117207", "taupe", NEW_OI26 / "117207_TAUPE.zip"),
+        ("Flexi", "134806", "negro", NEW_OI26 / "134806_BLACK-20260706T215338Z-3-001.zip"),
+        ("Flexi", "136804", "negro", NEW_OI26 / "136804_NEGRO.zip"),
+        ("Flexi", "137002", "oro_rosado", NEW_OI26 / "137002_ORO_ROSADO.zip"),
+        ("Flexi", "140601", "oro_rosado", NEW_OI26 / "140601_ORO_ROSA-20260106T221544Z-3-001.zip"),
+        ("Flexi", "142303", "negro", NEW_OI26 / "142303_NEGRO-20260706T215845Z-3-001.zip"),
+        ("Flexi", "406401", "tan", CLASSIC / "406401_TAN-20260105T171526Z-3-001.zip"),
+        ("Flexi", "406412", "negro", CLASSIC / "406412_NEGRO.zip"),
+        ("Flexi", "407801", "tan", CLASSIC / "407801_TAN.zip"),
+        ("Flexi", "417606", "negro", CLASSIC / "417606_NEGRO.zip"),
+        ("Flexi", "417606", "taupe", CLASSIC / "417606_TAUPE.zip"),
+        ("Flexi", "421501", "tinto", CLASSIC / "421501_TINTO-20260105T181604Z-3-001.zip"),
+        ("Flexi", "421503", "tan", CLASSIC / "421503_TAN-20260105T181607Z-3-001.zip"),
+        ("Flexi", "422906", "tan", CLASSIC / "422906_TAN-20260105T192545Z-3-001.zip"),
+        ("Flexi", "423101", "cognac", CLASSIC / "423101_COGNAC-20260105T192554Z-3-001.zip"),
+        ("Flexi", "423101", "negro", CLASSIC / "423101_NEGRO-20260105T192555Z-3-001.zip"),
+        ("Flexi", "423201", "negro", CLASSIC / "423201_NEGRO-20260105T194353Z-3-001.zip"),
+        ("Flexi", "424202", "azul", CLASSIC / "424202_AZUL-20260105T214644Z-3-001.zip"),
+        ("Flexi", "424202", "negro", CLASSIC / "424202_NEGRO-20260105T214713Z-3-001.zip"),
+        ("Flexi", "424601", "blanco", CLASSIC / "424601_WHITE-20260702T232556Z-3-001.zip"),
     )
-    for brand, model, color, archive in archive_specs:
+    for spec in archive_specs:
+        brand, model, color, archive, *optional_angles = spec
+        angles = optional_angles[0] if optional_angles else ANGLE_ORDER
         if model == "127202":
             # Las fotos de este modelo llegaron descomprimidas.
             folder = MISSING / "127202_NEGRO"
@@ -147,7 +191,7 @@ def source_images() -> dict[tuple[str, str], dict[str, Path | bytes]]:
         else:
             if not archive.exists():
                 raise FileNotFoundError(archive)
-            add_zip_series(images, brand, model, color, archive)
+            add_zip_series(images, brand, model, color, archive, angles)
 
     arisha = {
         "306703_negro_1.jpg": QUIRELLI_OI26 / "ARISHA_306703_NEGRO_QUIRELLI_OI26.jpg",
@@ -173,9 +217,33 @@ def update_products(source: str) -> tuple[str, list[dict[str, object]]]:
     products = json.loads(match.group(1))
     product_image_overrides = {
         ("Flexi", "418502"): product_images("418502", "negro"),
+        ("Flexi", "101912", "Negro"): product_images("101912", "negro"),
+        ("Flexi", "117207", "Negro"): product_images("117207", "negro", 8),
+        ("Flexi", "117207", "Taupe"): product_images("117207", "taupe"),
+        ("Flexi", "134806", "Negro"): product_images("134806", "negro"),
+        ("Flexi", "136804", "Negro"): product_images("136804", "negro"),
+        ("Flexi", "137002", "Oro rosado"): product_images("137002", "oro_rosado"),
+        ("Flexi", "140601", "Oro rosado"): product_images("140601", "oro_rosado"),
+        ("Flexi", "142303", "Negro"): product_images("142303", "negro"),
+        ("Flexi", "406401", "Tan"): product_images("406401", "tan"),
+        ("Flexi", "406412", "Negro"): product_images("406412", "negro"),
+        ("Flexi", "407801", "Tan"): product_images("407801", "tan"),
+        ("Flexi", "417606", "Negro"): product_images("417606", "negro"),
+        ("Flexi", "417606", "Taupe"): product_images("417606", "taupe"),
+        ("Flexi", "421501", "Tinto"): product_images("421501", "tinto"),
+        ("Flexi", "421503", "Tan"): product_images("421503", "tan"),
+        ("Flexi", "422906", "Tan"): product_images("422906", "tan"),
+        ("Flexi", "423101", "Cognac"): product_images("423101", "cognac"),
+        ("Flexi", "423101", "Negro"): product_images("423101", "negro"),
+        ("Flexi", "423201", "Negro"): product_images("423201", "negro"),
+        ("Flexi", "424202", "Azul"): product_images("424202", "azul"),
+        ("Flexi", "424202", "Negro"): product_images("424202", "negro"),
+        ("Flexi", "424601", "Blanco"): product_images("424601", "blanco"),
     }
     for product in products:
-        override = product_image_overrides.get((product["brand"], product["model"]))
+        override = product_image_overrides.get((product["brand"], product["model"], product["color"]))
+        if override is None:
+            override = product_image_overrides.get((product["brand"], product["model"]))
         if override:
             product["has_images"] = True
             product["images"] = override
