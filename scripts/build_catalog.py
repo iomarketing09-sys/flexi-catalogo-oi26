@@ -300,7 +300,42 @@ def apply_model_grouping(html: str) -> str:
                             <span style="font-size:0.72rem; color:#64748B; margin-left:0.35rem;">${modelColors.join(' · ')}</span>'''
     if old_colors not in html:
         raise RuntimeError("No se encontró la sección de colores de la tarjeta.")
-    return html.replace(old_colors, new_colors)
+    return apply_modal_presentation(html.replace(old_colors, new_colors))
+
+
+def apply_modal_presentation(html: str) -> str:
+    """Mantiene la ficha compacta y usable en móvil."""
+    replacements = (
+        (
+            "        @media (max-width: 768px) {\n            .modal-grid { grid-template-columns: 1fr; }\n        }",
+            "        @media (max-width: 768px) {\n            .modal-grid { grid-template-columns: 1fr; gap: 1.25rem; }\n            .modal-content { max-height: 94vh; width: 94%; margin: 3vh auto; }\n            .modal-body { padding: 1rem; }\n            .modal-header { padding: 1rem 1.25rem; }\n            .modal-image-main { max-height: 50vh; }\n            .modal-image-placeholder { max-height: 50vh; }\n        }",
+        ),
+        (
+            "        .modal-image-main {\n            width: 100%;\n            aspect-ratio: 3/4;\n            object-fit: cover;",
+            "        .modal-image-main {\n            width: 100%;\n            max-height: 68vh;\n            aspect-ratio: 4/5;\n            object-fit: contain;",
+        ),
+        (
+            "        .modal-image-placeholder {\n            width: 100%;\n            aspect-ratio: 3/4;",
+            "        .modal-image-placeholder {\n            width: 100%;\n            max-height: 68vh;\n            aspect-ratio: 4/5;",
+        ),
+        (
+            "<div class=\"modal-thumbnails\" id=\"modalThumbnails\"></div>",
+            "<div class=\"modal-thumbnails\" id=\"modalThumbnails\" data-max=\"5\"></div>",
+        ),
+        (
+            "thumbnails.innerHTML = item.images.map((img, idx) => {",
+            "const limitedImages = item.images.slice(0, 5);\n                thumbnails.innerHTML = limitedImages.map((img, idx) => {",
+        ),
+        (
+            "            const src = `assets/${marcaPath}/catalogo/${model}/${productsData.find(p => p.model === model && p.color === thumb.alt.split(' ').pop()).images[index]}`;\n            // Actually we need the correct image - let's use the thumb's src\n            document.getElementById('modalMainImage').src = thumb.src;",
+            "            document.getElementById('modalMainImage').src = thumb.src;",
+        ),
+    )
+    for old, new in replacements:
+        if old not in html:
+            raise RuntimeError(f"No se encontró el fragmento del modal: {old}")
+        html = html.replace(old, new, 1)
+    return html
 
 
 def build() -> None:

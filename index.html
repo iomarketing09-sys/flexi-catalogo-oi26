@@ -466,13 +466,19 @@
         }
 
         @media (max-width: 768px) {
-            .modal-grid { grid-template-columns: 1fr; }
+            .modal-grid { grid-template-columns: 1fr; gap: 1.25rem; }
+            .modal-content { max-height: 94vh; width: 94%; margin: 3vh auto; }
+            .modal-body { padding: 1rem; }
+            .modal-header { padding: 1rem 1.25rem; }
+            .modal-image-main { max-height: 50vh; }
+            .modal-image-placeholder { max-height: 50vh; }
         }
 
         .modal-image-main {
             width: 100%;
-            aspect-ratio: 3/4;
-            object-fit: cover;
+            max-height: 68vh;
+            aspect-ratio: 4/5;
+            object-fit: contain;
             border-radius: 12px;
             background: #F1F5F9;
             border: 1px solid var(--border-color);
@@ -480,7 +486,8 @@
 
         .modal-image-placeholder {
             width: 100%;
-            aspect-ratio: 3/4;
+            max-height: 68vh;
+            aspect-ratio: 4/5;
             border-radius: 12px;
             background: #F1F5F9;
             display: flex;
@@ -665,7 +672,7 @@
                             <div id="modalPlaceholder" class="modal-image-placeholder"></div>
                             <img id="modalGoldSeal" class="gold-seal" src="sello_dorado_oi26.svg" alt="Sello OI26" style="display:none;">
                         </div>
-                        <div class="modal-thumbnails" id="modalThumbnails"></div>
+                        <div class="modal-thumbnails" id="modalThumbnails" data-max="5"></div>
                     </div>
                     <div class="modal-details">
                         <h3 id="modalDetailTitle">Detalles del Producto</h3>
@@ -885,7 +892,8 @@
                 goldSeal.style.display = item.campaign === 'OI26' ? 'block' : 'none';
 
                 // Thumbnails
-                thumbnails.innerHTML = item.images.map((img, idx) => {
+                const limitedImages = item.images.slice(0, 5);
+                thumbnails.innerHTML = limitedImages.map((img, idx) => {
                     const src = `assets/${marcaPath}/catalogo/${item.model}/${img}`;
                     return `<img class="modal-thumb ${idx === 0 ? 'active' : ''}" src="${src}" alt="${item.name} ${idx+1}" data-index="${idx}" onclick="changeModalImage(this, ${idx}, '${marcaPath}', '${item.model}')">`;
                 }).join('');
@@ -930,8 +938,6 @@
         function changeModalImage(thumb, index, marcaPath, model) {
             document.querySelectorAll('.modal-thumb').forEach(t => t.classList.remove('active'));
             thumb.classList.add('active');
-            const src = `assets/${marcaPath}/catalogo/${model}/${productsData.find(p => p.model === model && p.color === thumb.alt.split(' ').pop()).images[index]}`;
-            // Actually we need the correct image - let's use the thumb's src
             document.getElementById('modalMainImage').src = thumb.src;
         }
 
