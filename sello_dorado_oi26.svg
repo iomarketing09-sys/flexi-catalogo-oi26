@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" width="160" height="160">
+  <defs>
+    <radialGradient id="goldGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFF3C4" />
+      <stop offset="60%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#8B6508" />
+    </radialGradient>
+    <linearGradient id="goldRim" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE885" />
+      <stop offset="30%" stop-color="#D4AF37" />
+      <stop offset="70%" stop-color="#AA7C11" />
+      <stop offset="100%" stop-color="#FFDF73" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+
+  <!-- Ribbon tail background -->
+  <path d="M50 120 L50 150 L65 138 L80 150 L80 120 Z" fill="#92400E" />
+  <path d="M80 120 L80 150 L95 138 L110 150 L110 120 Z" fill="#B45309" />
+
+  <!-- Outer Starburst/Serrated Badge Base -->
+  <g filter="url(#shadow)">
+    <circle cx="80" cy="75" r="62" fill="url(#goldRim)"/>
+    <circle cx="80" cy="75" r="56" fill="#78350F"/>
+    <circle cx="80" cy="75" r="52" fill="url(#goldGlow)"/>
+    <circle cx="80" cy="75" r="48" fill="#1E1B18"/>
+  </g>
+
+  <!-- Inner Gold Ring -->
+  <circle cx="80" cy="75" r="45" fill="none" stroke="url(#goldRim)" stroke-width="2.5" stroke-dasharray="6 3"/>
+
+  <!-- Badge Text -->
+  <text x="80" y="52" font-family="'Arial Black', sans-serif" font-weight="900" font-size="12" fill="#FFE885" text-anchor="middle" letter-spacing="1">NUEVO</text>
+  
+  <text x="80" y="74" font-family="'Impact', 'Arial Black', sans-serif" font-weight="900" font-size="22" fill="#FFFFFF" text-anchor="middle" letter-spacing="2">OI 26</text>
+  
+  <text x="80" y="91" font-family="'Arial', sans-serif" font-weight="800" font-size="8" fill="#F59E0B" text-anchor="middle" letter-spacing="1.5">FLEXI</text>
+
+  <!-- Decorative Stars -->
+  <path d="M80 97 L81.5 101 L85.5 101 L82.2 103.5 L83.5 107.5 L80 105 L76.5 107.5 L77.8 103.5 L74.5 101 L78.5 101 Z" fill="#FFE885"/>
+  <path d="M62 94 L63 96.5 L66 96.5 L63.6 98.2 L64.5 101 L62 99.2 L59.5 101 L60.4 98.2 L58 96.5 L61 96.5 Z" fill="#D4AF37"/>
+  <path d="M98 94 L99 96.5 L102 96.5 L99.6 98.2 L100.5 101 L98 99.2 L95.5 101 L96.4 98.2 L94 96.5 L97 96.5 Z" fill="#D4AF37"/>
+</svg>

@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Flexi & Quirelli · Piedras Negras 2026</title>
+    <style>
+        :root {
+            --flexi-red: #D32F2F;
+            --flexi-dark: #111827;
+            --quirelli-gold: #C5A059;
+            --bg-light: #F8FAFC;
+            --border-color: #E2E8F0;
+            --whatsapp-green: #25D366;
+            --whatsapp-dark: #128C7E;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: #1E293B;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: linear-gradient(135deg, #090D16 0%, #111827 100%);
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border-bottom: 1px solid #1E293B;
+        }
+
+        .header-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .brand-logo-flexi {
+            background-color: var(--flexi-red);
+            color: white;
+            font-weight: 900;
+            font-size: 1.6rem;
+            letter-spacing: 2px;
+            padding: 0.35rem 1.1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(211, 47, 47, 0.4);
+            font-style: italic;
+        }
+
+        .brand-logo-quirelli {
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: var(--quirelli-gold);
+            background: rgba(30, 41, 59, 0.8);
+            padding: 0.35rem 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(197, 160, 89, 0.4);
+            font-family: 'Georgia', serif;
+        }
+
+        .location-tag {
+            color: #94A3B8;
+            font-size: 0.875rem;
+            border-left: 1px solid #334155;
+            padding-left: 1rem;
+            font-weight: 600;
+        }
+
+        .hero {
+            background: #111827;
+            color: white;
+            padding: 2.2rem 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid #334155;
+        }
+
+        .hero h1 {
+            font-size: 2.1rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            margin-bottom: 0.4rem;
+            text-transform: uppercase;
+        }
+
+        .hero p {
+            color: #94A3B8;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+        }
+
+        .controls-section {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+            width: 100%;
+        }
+
+        .controls-card {
+            background: white;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            padding: 1.25rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-box-wrap {
+            grid-column: span 2;
+        }
+
+        @media (max-width: 768px) {
+            .search-box-wrap {
+                grid-column: span 1;
+            }
+        }
+
+        label {
+            display: block;
+            font-size: 0.7rem;
+            font-weight: 900;
+            color: #0F172A;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.4rem;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 0.65rem 1rem;
+            background-color: #F8FAFC;
+            border: 1px solid #CBD5E1;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            color: #0F172A;
+            outline: none;
+        }
+
+        input[type="text"]:focus, select:focus {
+            border-color: var(--flexi-red);
+            background-color: white;
+            box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.1);
+        }
+
+        .controls-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 0.75rem;
+            border-top: 1px solid #F1F5F9;
+            font-size: 0.8rem;
+            color: #64748B;
+        }
+
+        .btn-reset {
+            padding: 0.5rem 1rem;
+            background: #F1F5F9;
+            border: 1px solid #CBD5E1;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #334155;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-reset:hover {
+            background: #E2E8F0;
+        }
+
+        .products-section {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem 3rem 1.5rem;
+            width: 100%;
+            flex: 1;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 6px rgba(0,0,0,0.03);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .product-card.flexi { border-top: 4px solid var(--flexi-red); }
+        .product-card.quirelli { border-top: 4px solid var(--quirelli-gold); }
+
+        .card-image {
+            aspect-ratio: 3/4;
+            background: #F1F5F9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover .card-image img { transform: scale(1.05); }
+
+        .card-image .placeholder {
+            color: #94A3B8;
+            font-size: 0.85rem;
+            text-align: center;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-content {
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .brand-badge {
+            font-size: 0.65rem;
+            font-weight: 900;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .brand-badge.flexi {
+            background: #FEF2F2;
+            color: var(--flexi-red);
+        }
+
+        .brand-badge.quirelli {
+            background: #FEFCE8;
+            color: #B48608;
+        }
+
+        .card-sku {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #64748B;
+            letter-spacing: 0.5px;
+            margin-left: auto;
+        }
+
+        .card-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #0F172A;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .card-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 0.75rem;
+            color: #64748B;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: #F8FAFC;
+            padding: 0.35rem 0.65rem;
+            border-radius: 9999px;
+        }
+
+        .card-colors {
+            margin-bottom: 1rem;
+        }
+
+        .colors-label {
+            font-size: 0.7rem;
+            color: #94A3B8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .color-swatch {
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            margin-right: 6px;
+            border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .color-swatch:hover { transform: scale(1.2); }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            padding-top: 1rem;
+            border-top: 1px solid #F1F5F9;
+        }
+
+        .card-status {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .status-tag {
+            padding: 0.35rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-inventario { background: #ECFDF5; color: #065F46; }
+        .status-assets { background: #FEFCE8; color: #B48608; }
+        .status-placeholder { background: #F1F5F9; color: #64748B; }
+
+        .btn-whatsapp-card {
+            padding: 0.6rem 1.1rem;
+            background: var(--whatsapp-green);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .btn-whatsapp-card:hover {
+            background: var(--whatsapp-dark);
+            transform: scale(1.02);
+        }
+
+        .btn-whatsapp-card svg { width: 16px; height: 16px; }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.85);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal.active { display: flex; }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 800px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.25);
+        }
+
+        .modal-header {
+            padding: 1.5rem 2rem;
+            background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+            color: white;
+            border-radius: 20px 20px 0 0;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem; right: 1rem;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .modal-close:hover { background: rgba(255,255,255,0.2); }
+
+        .modal-body { padding: 2rem; }
+
+        .modal-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        @media (max-width: 768px) {
+            .modal-grid { grid-template-columns: 1fr; }
+        }
+
+        .modal-image-main {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            border-radius: 12px;
+            background: #F1F5F9;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-image-placeholder {
+            width: 100%;
+            aspect-ratio: 3/4;
+            border-radius: 12px;
+            background: #F1F5F9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-thumbnails {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        .modal-thumb {
+            width: 70px;
+            height: 70px;
+            border-radius: 8px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: border-color 0.2s;
+            flex-shrink: 0;
+        }
+
+        .modal-thumb.active, .modal-thumb:hover {
+            border-color: var(--flexi-red);
+        }
+
+        .modal-details {
+            font-size: 0.875rem;
+            line-height: 1.8;
+            color: #334155;
+        }
+
+        .modal-details h3 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #0F172A;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #E2E8F0;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #F1F5F9;
+        }
+
+        .detail-label { color: #64748B; font-weight: 500; }
+        .detail-value { color: #0F172A; font-weight: 600; }
+
+        .modal-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            padding: 1rem 1.5rem;
+            background: var(--whatsapp-green);
+            color: white;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+        }
+
+        .modal-whatsapp:hover {
+            background: var(--whatsapp-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(37, 211, 102, 0.4);
+        }
+
+        .modal-whatsapp svg { width: 22px; height: 22px; }
+
+        /* Sello dorado */
+        .gold-seal {
+            position: absolute;
+            top: 1rem; right: 1rem;
+            width: 50px; height: 50px;
+        }
+
+        /* Hidden */
+        .hidden { display: none !important; }
+
+        /* Print */
+        @media print {
+            header, .controls-section, .card-footer, .btn-whatsapp-card, .modal { display: none !important; }
+            .product-card { break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
+            .products-grid { grid-template-columns: repeat(3, 1fr); }
+            body { background: white !important; }
+            .hero { background: #111827 !important; -webkit-print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="brand-group">
+                <span class="brand-logo-flexi">Flexi</span>
+                <span class="brand-logo-quirelli">Quirelli</span>
+            </div>
+            <span class="location-tag">Piedras Negras</span>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>Catálogo Otoño Invierno 2026</h1>
+        <p>Inventario Confirmado en Sucursal</p>
+    </section>
+
+    <div class="controls-section">
+        <div class="controls-card">
+            <div class="controls-grid">
+                <div class="search-box-wrap">
+                    <label>Buscar</label>
+                    <input type="text" id="searchInput" placeholder="SKU, modelo, nombre, color...">
+                </div>
+                <div>
+                    <label>Campaña</label>
+                    <select id="seasonFilter">
+                        <option value="ALL">Todas</option>
+                        <option value="OI26">Otoño Invierno 2026</option>
+                        <option value="CLASICO">Línea Clásica</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Marca</label>
+                    <select id="brandFilter">
+                        <option value="ALL">Todas</option>
+                        <option value="Flexi">Flexi</option>
+                        <option value="Quirelli">Quirelli</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Categoría</label>
+                    <select id="categoryFilter">
+                        <option value="ALL">Todas</option>
+                        <option value="Dama">Dama</option>
+                        <option value="Caballero">Caballero</option>
+                        <option value="Escolar">Escolar</option>
+                    </select>
+                </div>
+            </div>
+            <div class="controls-footer">
+                <span id="resultsCount"></span>
+                <button class="btn-reset" id="resetFiltersBtn">Limpiar filtros</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="products-section">
+        <div class="products-grid" id="productsGrid"></div>
+    </div>
+
+    <footer style="background:#0F172A; color:white; padding:2rem 1.5rem; text-align:center; margin-top:auto;">
+        <div style="max-width:1280px; margin:0 auto;">
+            <strong>Flexi & Quirelli · Sucursal Piedras Negras</strong>
+            <div style="margin-top:0.5rem; color:#94A3B8; font-size:0.875rem;">Inventario Confirmado 2026</div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" id="closeModal" aria-label="Cerrar">&times;</button>
+            <div class="modal-header">
+                <span class="brand-badge" id="modalBrand"></span>
+                <h2 id="modalName" style="margin-top:0.5rem; font-size:1.5rem;"></h2>
+                <p id="modalSku" style="opacity:0.8; margin-top:0.25rem; font-size:0.9rem;"></p>
+            </div>
+            <div class="modal-body">
+                <div class="modal-grid">
+                    <div>
+                        <div class="modal-image-wrapper" style="position:relative;">
+                            <img id="modalMainImage" class="modal-image-main" src="" alt="" style="display:none;">
+                            <div id="modalPlaceholder" class="modal-image-placeholder"></div>
+                            <img id="modalGoldSeal" class="gold-seal" src="sello_dorado_oi26.svg" alt="Sello OI26" style="display:none;">
+                        </div>
+                        <div class="modal-thumbnails" id="modalThumbnails"></div>
+                    </div>
+                    <div class="modal-details">
+                        <h3 id="modalDetailTitle">Detalles del Producto</h3>
+                        <div id="modalDetails"></div>
+                        <a id="modalWhatsApp" class="modal-whatsapp" href="#" target="_blank">
+                            <svg fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                            <span>Contactar por WhatsApp</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const productsData = [{"id": 1, "model": "5807", "name": "Flexi Clasico", "brand": "Flexi", "color": "Blanco", "multi": "N", "category": "Dama", "page": 2, "material": "Piel", "campaign": "CLASICO", "has_images": false, "images": []}, {"id": 2, "model": "48301", "name": "Ofelia", "brand": "Flexi", "color": "Negro", "multi": "N", "category": "Dama", "page": 10, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 3, "model": "48303", "name": "Ofelia", "brand": "Flexi", "color": "Negro", "multi": "N", "category": "Dama", "page": 10, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 4, "model": "50816", "name": "Santiago", "brand": "Flexi", "color": "Negro", "multi": "N", "category": "Caballero", "page": 78, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 5, "model": "59305", "name": "Quilmes", "brand": "Flexi", "color": "DK Oporto", "multi": "N", "category": "Caballero", "page": 79, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 6, "model": "63201", "name": "Kaiser", "brand": "Flexi", "color": "Blanco", "multi": "N", "category": "Caballero", "page": 80, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 7, "model": "63202", "name": "Kaiser", "brand": "Flexi", "color": "Blanco", "multi": "N", "category": "Caballero", "page": 80, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 8, "model": "66514", "name": "Freeland", "brand": "Flexi", "color": "Chocolate", "multi": "N", "category": "Caballero", "page": 81, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 9, "model": "66517", "name": "Freeland", "brand": "Flexi", "color": "Negro", "multi": "S", "category": "Caballero", "page": 81, "material": "Piel", "campaign": "OI26", "has_images": true, "images": ["66517_negro_1.jpg", "66517_negro_2.jpg"]}, {"id": 10, "model": "66517", "name": "Freeland", "brand": "Flexi", "color": "Marrón", "multi": "S", "category": "Caballero", "page": 81, "material": "Piel", "campaign": "OI26", "has_images": true, "images": ["66517_negro_1.jpg", "66517_negro_2.jpg"]}, {"id": 11, "model": "66525", "name": "Freeland", "brand": "Flexi", "color": "Chocolate", "multi": "N", "category": "Caballero", "page": 82, "material": "Piel", "campaign": "OI26", "has_images": true, "images": ["66525_chocolate_1.jpg", "66525_chocolate_2.jpg", "66525_negro_1.jpg", "66525_negro_2.jpg", "66525_negro_3.jpg"]}, {"id": 12, "model": "88701", "name": "Quirelli Casual", "brand": "Quirelli", "color": "Negro", "multi": "N", "category": "Caballero", "page": 1, "material": "Piel", "campaign": "CLASICO", "has_images": false, "images": []}, {"id": 13, "model": "88702", "name": "Quirelli Mocasín", "brand": "Quirelli", "color": "Brandy", "multi": "S", "category": "Caballero", "page": 1, "material": "Piel", "campaign": "CLASICO", "has_images": false, "images": []}, {"id": 14, "model": "88702", "name": "Quirelli Mocasín", "brand": "Quirelli", "color": "Negro", "multi": "S", "category": "Caballero", "page": 1, "material": "Piel", "campaign": "CLASICO", "has_images": false, "images": []}, {"id": 15, "model": "101905", "name": "Amelie", "brand": "Flexi", "color": "Tan", "multi": "S", "category": "Dama", "page": 12, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 16, "model": "101905", "name": "Amelie", "brand": "Flexi", "color": "Negro", "multi": "S", "category": "Dama", "page": 12, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 17, "model": "101908", "name": "Amelie", "brand": "Flexi", "color": "Café", "multi": "S", "category": "Dama", "page": 12, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 18, "model": "101908", "name": "Amelie", "brand": "Flexi", "color": "Negro", "multi": "S", "category": "Dama", "page": 12, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 19, "model": "101912", "name": "Amelie", "brand": "Flexi", "color": "Negro", "multi": "N", "category": "Dama", "page": 12, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 20, "model": "117207", "name": "Atsiri", "brand": "Flexi", "color": "Taupe", "multi": "S", "category": "Dama", "page": 23, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 21, "model": "117207", "name": "Atsiri", "brand": "Flexi", "color": "Blanco", "multi": "S", "category": "Dama", "page": 23, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 22, "model": "117207", "name": "Atsiri", "brand": "Flexi", "color": "Negro", "multi": "S", "category": "Dama", "page": 23, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 23, "model": "127202", "name": "Flexi Casual", "brand": "Flexi", "color": "Negro", "multi": "N", "category": "Dama", "page": 1, "material": "Piel", "campaign": "CLASICO", "has_images": true, "images": ["127202_negro_1.jpg", "127202_negro_2.jpg", "127202_negro_3.jpg", "127202_negro_4.jpg", "127202_negro_5.jpg", "127202_negro_6.jpg", "127202_negro_7.jpg", "127202_negro_8.jpg", "127202_negro_9.jpg"]}, {"id": 24, "model": "134806", "name": "Fenji", "brand": "Flexi", "color": "Negro", "multi": "N", "category": "Dama", "page": 36, "material": "Textil", "campaign": "OI26", "has_images": false, "images": []}, {"id": 25, "model": "136804", "name": "Atessa", "brand": "Flexi", "color": "Negro", "multi": "N", "category": "Dama", "page": 40, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 26, "model": "137002", "name": "Mildred", "brand": "Flexi", "color": "Oro rosado", "multi": "N", "category": "Dama", "page": 41, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 27, "model": "139601", "name": "Flexi Dama", "brand": "Flexi", "color": "Oro", "multi": "N", "category": "Dama", "page": 1, "material": "Piel", "campaign": "CLASICO", "has_images": true, "images": ["139601_oro_1.jpg", "139601_oro_2.jpg", "139601_oro_3.jpg", "139601_oro_4.jpg", "139601_oro_5.jpg", "139601_oro_6.jpg", "139601_oro_7.jpg", "139601_oro_8.jpg", "139601_oro_9.jpg"]}, {"id": 28, "model": "140601", "name": "Maggie", "brand": "Flexi", "color": "Oro rosado", "multi": "N", "category": "Dama", "page": 55, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 29, "model": "142303", "name": "Luzia", "brand": "Flexi", "color": "Negro", "multi": "N", "category": "Dama", "page": 59, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 30, "model": "142801", "name": "Isaura", "brand": "Flexi", "color": "Beige", "multi": "S", "category": "Dama", "page": 63, "material": "Piel", "campaign": "OI26", "has_images": true, "images": ["142801_beige.jpg", "142801_tan.jpg"]}, {"id": 31, "model": "142801", "name": "Isaura", "brand": "Flexi", "color": "Negro", "multi": "S", "category": "Dama", "page": 63, "material": "Piel", "campaign": "OI26", "has_images": true, "images": ["142801_beige.jpg", "142801_tan.jpg"]}, {"id": 32, "model": "142901", "name": "Jocelyn", "brand": "Flexi", "color": "Oro", "multi": "S", "category": "Dama", "page": 64, "material": "Piel", "campaign": "OI26", "has_images": true, "images": ["142901_tan.jpg"]}, {"id": 33, "model": "142901", "name": "Jocelyn", "brand": "Flexi", "color": "Negro", "multi": "S", "category": "Dama", "page": 64, "material": "Piel", "campaign": "OI26", "has_images": true, "images": ["142901_tan.jpg"]}, {"id": 34, "model": "143001", "name": "Ginny", "brand": "Flexi", "color": "Plata", "multi": "S", "category": "Dama", "page": 66, "material": "Sintético", "campaign": "OI26", "has_images": true, "images": ["143001_plata.jpg"]}, {"id": 35, "model": "143001", "name": "Ginny", "brand": "Flexi", "color": "Negro", "multi": "S", "category": "Dama", "page": 66, "material": "Sintético", "campaign": "OI26", "has_images": true, "images": ["143001_plata.jpg"]}, {"id": 36, "model": "143001", "name": "Ginny", "brand": "Flexi", "color": "Oro", "multi": "S", "category": "Dama", "page": 66, "material": "Sintético", "campaign": "OI26", "has_images": true, "images": ["143001_plata.jpg"]}, {"id": 37, "model": "143201", "name": "Lydia", "brand": "Flexi", "color": "Negro", "multi": "N", "category": "Dama", "page": 67, "material": "Sintético", "campaign": "OI26", "has_images": true, "images": ["143201_beige.jpg", "143201_negro.jpg"]}, {"id": 38, "model": "304402", "name": "Quirelli Dama", "brand": "Quirelli", "color": "Latte", "multi": "S", "category": "Dama", "page": 1, "material": "Piel", "campaign": "CLASICO", "has_images": true, "images": ["304402_latte_1.jpg", "304402_latte_2.jpg", "304402_latte_3.jpg", "304402_latte_4.jpg", "304402_latte_5.jpg", "304402_latte_6.jpg", "304402_latte_7.jpg", "304402_latte_8.jpg", "304402_latte_9.jpg", "304402_negro_1.jpg", "304402_negro_2.jpg", "304402_negro_3.jpg", "304402_negro_4.jpg", "304402_negro_5.jpg", "304402_negro_6.jpg", "304402_negro_7.jpg", "304402_negro_8.jpg", "304402_negro_9.jpg"]}, {"id": 39, "model": "304402", "name": "Quirelli Dama", "brand": "Quirelli", "color": "Negro", "multi": "S", "category": "Dama", "page": 1, "material": "Piel", "campaign": "CLASICO", "has_images": true, "images": ["304402_latte_1.jpg", "304402_latte_2.jpg", "304402_latte_3.jpg", "304402_latte_4.jpg", "304402_latte_5.jpg", "304402_latte_6.jpg", "304402_latte_7.jpg", "304402_latte_8.jpg", "304402_latte_9.jpg", "304402_negro_1.jpg", "304402_negro_2.jpg", "304402_negro_3.jpg", "304402_negro_4.jpg", "304402_negro_5.jpg", "304402_negro_6.jpg", "304402_negro_7.jpg", "304402_negro_8.jpg", "304402_negro_9.jpg"]}, {"id": 40, "model": "305101", "name": "Quirelli Vestir", "brand": "Quirelli", "color": "Negro", "multi": "S", "category": "Caballero", "page": 1, "material": "Piel", "campaign": "CLASICO", "has_images": true, "images": ["305101_negro_1.jpg", "305101_negro_2.jpg", "305101_negro_3.jpg", "305101_negro_4.jpg", "305101_negro_5.jpg", "305101_negro_6.jpg", "305101_negro_7.jpg", "305101_negro_8.jpg", "305101_negro_9.jpg", "305101_tan_1.jpg", "305101_tan_2.jpg", "305101_tan_3.jpg", "305101_tan_4.jpg", "305101_tan_5.jpg", "305101_tan_6.jpg", "305101_tan_7.jpg", "305101_tan_8.jpg", "305101_tan_9.jpg"]}, {"id": 41, "model": "305101", "name": "Quirelli Vestir", "brand": "Quirelli", "color": "Tan", "multi": "S", "category": "Caballero", "page": 1, "material": "Piel", "campaign": "CLASICO", "has_images": true, "images": ["305101_negro_1.jpg", "305101_negro_2.jpg", "305101_negro_3.jpg", "305101_negro_4.jpg", "305101_negro_5.jpg", "305101_negro_6.jpg", "305101_negro_7.jpg", "305101_negro_8.jpg", "305101_negro_9.jpg", "305101_tan_1.jpg", "305101_tan_2.jpg", "305101_tan_3.jpg", "305101_tan_4.jpg", "305101_tan_5.jpg", "305101_tan_6.jpg", "305101_tan_7.jpg", "305101_tan_8.jpg", "305101_tan_9.jpg"]}, {"id": 42, "model": "306703", "name": "Quirelli Dama", "brand": "Quirelli", "color": "Nude", "multi": "S", "category": "Dama", "page": 1, "material": "Piel", "campaign": "CLASICO", "has_images": true, "images": ["306703_negro_1.jpg", "306703_negro_2.jpg", "306703_negro_3.jpg", "306703_negro_4.jpg", "306703_negro_5.jpg", "306703_nude_1.jpg", "306703_nude_2.jpg", "306703_nude_3.jpg", "306703_nude_4.jpg", "306703_nude_5.jpg"]}, {"id": 43, "model": "306703", "name": "Quirelli Dama", "brand": "Quirelli", "color": "Negro", "multi": "S", "category": "Dama", "page": 1, "material": "Piel", "campaign": "CLASICO", "has_images": true, "images": ["306703_negro_1.jpg", "306703_negro_2.jpg", "306703_negro_3.jpg", "306703_negro_4.jpg", "306703_negro_5.jpg", "306703_nude_1.jpg", "306703_nude_2.jpg", "306703_nude_3.jpg", "306703_nude_4.jpg", "306703_nude_5.jpg"]}, {"id": 44, "model": "401001", "name": "Randall", "brand": "Flexi", "color": "Negro", "multi": "S", "category": "Caballero", "page": 88, "material": "Piel", "campaign": "OI26", "has_images": true, "images": ["401001_tan.jpg"]}, {"id": 45, "model": "401001", "name": "Randall", "brand": "Flexi", "color": "Dark tan", "multi": "S", "category": "Caballero", "page": 88, "material": "Piel", "campaign": "OI26", "has_images": true, "images": ["401001_tan.jpg"]}, {"id": 46, "model": "402112", "name": "McQueen", "brand": "Flexi", "color": "Negro", "multi": "N", "category": "Escolar", "page": 141, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 47, "model": "403019", "name": "Escolar Jr", "brand": "Flexi", "color": "Beige", "multi": "N", "category": "Escolar", "page": 1, "material": "Piel", "campaign": "CLASICO", "has_images": true, "images": ["403019_beige_1.jpg", "403019_beige_2.jpg", "403019_beige_3.jpg", "403019_beige_4.jpg", "403019_beige_5.jpg", "403019_beige_6.jpg", "403019_beige_7.jpg", "403019_beige_8.jpg", "403019_beige_9.jpg"]}, {"id": 48, "model": "404801", "name": "Yacht", "brand": "Flexi", "color": "Oporto", "multi": "S", "category": "Caballero", "page": 91, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 49, "model": "404801", "name": "Yacht", "brand": "Flexi", "color": "Negro", "multi": "S", "category": "Caballero", "page": 91, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 50, "model": "406401", "name": "Bali", "brand": "Flexi", "color": "Tan", "multi": "N", "category": "Caballero", "page": 94, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 51, "model": "406412", "name": "Bali", "brand": "Flexi", "color": "Negro", "multi": "N", "category": "Caballero", "page": 94, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 52, "model": "407801", "name": "Cook", "brand": "Flexi", "color": "Negro", "multi": "S", "category": "Caballero", "page": 95, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 53, "model": "407801", "name": "Cook", "brand": "Flexi", "color": "Tan", "multi": "S", "category": "Caballero", "page": 95, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 54, "model": "414404", "name": "Bowie Jr", "brand": "Flexi", "color": "Negro", "multi": "N", "category": "Escolar", "page": 142, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 55, "model": "417606", "name": "Heiko", "brand": "Flexi", "color": "Negro", "multi": "S", "category": "Caballero", "page": 103, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 56, "model": "417606", "name": "Heiko", "brand": "Flexi", "color": "Taupe", "multi": "S", "category": "Caballero", "page": 103, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 57, "model": "418502", "name": "Flexi Vestir", "brand": "Flexi", "color": "Negro", "multi": "N", "category": "Caballero", "page": 1, "material": "Piel", "campaign": "CLASICO", "has_images": true, "images": ["418502_negro_1.jpg", "418502_negro_2.jpg", "418502_negro_3.jpg", "418502_negro_4.jpg", "418502_negro_5.jpg", "418502_negro_6.jpg", "418502_negro_7.jpg", "418502_negro_8.jpg", "418502_negro_9.jpg"]}, {"id": 58, "model": "419501", "name": "Flexi Casual", "brand": "Flexi", "color": "Negro", "multi": "N", "category": "Caballero", "page": 1, "material": "Piel", "campaign": "CLASICO", "has_images": true, "images": ["419501_tan_1.jpg", "419501_tan_2.jpg", "419501_tan_3.jpg", "419501_tan_4.jpg", "419501_tan_5.jpg", "419501_tan_6.jpg", "419501_tan_7.jpg", "419501_tan_8.jpg", "419501_tan_9.jpg"]}, {"id": 59, "model": "419502", "name": "Flexi Casual", "brand": "Flexi", "color": "Negro", "multi": "N", "category": "Caballero", "page": 1, "material": "Piel", "campaign": "CLASICO", "has_images": true, "images": ["419502_negro_1.jpg", "419502_negro_2.jpg", "419502_negro_3.jpg", "419502_negro_4.jpg", "419502_negro_5.jpg", "419502_negro_6.jpg", "419502_negro_7.jpg", "419502_negro_8.jpg", "419502_negro_9.jpg"]}, {"id": 60, "model": "421501", "name": "Erastos", "brand": "Flexi", "color": "Tinto", "multi": "N", "category": "Caballero", "page": 110, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 61, "model": "421503", "name": "Erastos", "brand": "Flexi", "color": "Tan", "multi": "N", "category": "Caballero", "page": 110, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 62, "model": "422906", "name": "Anderson", "brand": "Flexi", "color": "Tan", "multi": "S", "category": "Caballero", "page": 117, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 63, "model": "422906", "name": "Anderson", "brand": "Flexi", "color": "Negro", "multi": "S", "category": "Caballero", "page": 117, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 64, "model": "423101", "name": "Clansy", "brand": "Flexi", "color": "Cognac", "multi": "S", "category": "Caballero", "page": 119, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 65, "model": "423101", "name": "Clansy", "brand": "Flexi", "color": "Negro", "multi": "S", "category": "Caballero", "page": 119, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 66, "model": "423101", "name": "Clansy", "brand": "Flexi", "color": "Café", "multi": "S", "category": "Caballero", "page": 119, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 67, "model": "423201", "name": "Banks", "brand": "Flexi", "color": "Negro", "multi": "N", "category": "Caballero", "page": 120, "material": "Piel", "campaign": "OI26", "has_images": false, "images": []}, {"id": 68, "model": "423803", "name": "Flexi Nautico", "brand": "Flexi", "color": "Marino", "multi": "N", "category": "Caballero", "page": 1, "material": "Piel", "campaign": "CLASICO", "has_images": true, "images": ["423803_marino_1.jpg", "423803_marino_2.jpg", "423803_marino_3.jpg", "423803_marino_4.jpg", "423803_marino_5.jpg", "423803_marino_6.jpg", "423803_marino_7.jpg", "423803_marino_8.jpg", "423803_marino_9.jpg"]}, {"id": 69, "model": "424202", "name": "Carter", "brand": "Flexi", "color": "Azul", "multi": "S", "category": "Caballero", "page": 124, "material": "Textil", "campaign": "OI26", "has_images": false, "images": []}, {"id": 70, "model": "424202", "name": "Carter", "brand": "Flexi", "color": "Negro", "multi": "S", "category": "Caballero", "page": 124, "material": "Textil", "campaign": "OI26", "has_images": false, "images": []}, {"id": 71, "model": "424601", "name": "Floyd", "brand": "Flexi", "color": "Blanco", "multi": "N", "category": "Escolar", "page": 145, "material": "Sintético", "campaign": "OI26", "has_images": false, "images": []}, {"id": 72, "model": "700803", "name": "Quirelli Formal", "brand": "Quirelli", "color": "Negro", "multi": "N", "category": "Caballero", "page": 1, "material": "Piel", "campaign": "CLASICO", "has_images": false, "images": []}, {"id": 73, "model": "700804", "name": "Quirelli Formal", "brand": "Quirelli", "color": "Negro", "multi": "N", "category": "Caballero", "page": 1, "material": "Piel", "campaign": "CLASICO", "has_images": false, "images": []}, {"id": 74, "model": "707205", "name": "Quirelli Oxford", "brand": "Quirelli", "color": "Negro", "multi": "N", "category": "Caballero", "page": 1, "material": "Piel", "campaign": "CLASICO", "has_images": true, "images": ["707205_negro_1.jpg", "707205_negro_2.jpg", "707205_negro_3.jpg", "707205_negro_4.jpg", "707205_negro_5.jpg", "707205_negro_6.jpg", "707205_negro_7.jpg", "707205_negro_8.jpg", "707205_negro_9.jpg"]}, {"id": 75, "model": "707902", "name": "Quirelli Loafer", "brand": "Quirelli", "color": "Negro", "multi": "N", "category": "Caballero", "page": 1, "material": "Piel", "campaign": "CLASICO", "has_images": true, "images": ["707902_negro_1.jpg", "707902_negro_2.jpg", "707902_negro_3.jpg", "707902_negro_4.jpg", "707902_negro_5.jpg", "707902_negro_6.jpg", "707902_negro_7.jpg", "707902_negro_8.jpg", "707902_negro_9.jpg"]}];
+        const STORE_WHATSAPP = "5218781012084";
+        const GOLD_SEAL = "sello_dorado_oi26.svg";
+        
+        const COLOR_MAP = {"negro": "#1A1A1A", "blanco": "#FFFFFF", "taupe": "#8B7355", "beige": "#D4C4A8", "arena": "#D4C4A8", "tan": "#D2B48C", "oro": "#DAA520", "gold": "#DAA520", "dorado": "#DAA520", "plata": "#C0C0C0", "silver": "#C0C0C0", "chocolate": "#5C3317", "café": "#6F4E37", "cafe": "#6F4E37", "cognac": "#8B4513", "vino": "#722F37", "wine": "#722F37", "brandy": "#C46210", "canela": "#D2691E", "nude": "#E3BC9A", "latte": "#C8A97E", "moka": "#3D2B1F", "viborabeige": "#C4B599", "vibora_beige": "#C4B599", "champagne": "#F7E7CE", "oro rosa": "#E8B4B4", "oro_rosa": "#E8B4B4", "oporto": "#8B4513", "azul": "#1E3A5F", "navy": "#1E3A5F", "petróleo": "#0C2D48", "petroleo": "#0C2D48", "trigo": "#D2B48C", "cream": "#F5F0EB", "marrón": "#5C3317", "marron": "#5C3317", "gris": "#6E6E6E", "gray": "#6E6E6E", "rosa": "#D4A5A5", "pink": "#D4A5A5", "verde": "#2E5E3E", "olivo": "#6B8E23", "oliva": "#6B8E23", "ginger": "#B5651D", "cocoa": "#4B3621", "cherry": "#C0392B", "tabaco": "#5D4037", "capuchino": "#C4A484", "tinta": "#1A1A2E", "dark tan": "#9B7A56", "dk oporto": "#6B3D3D", "marino": "#1A2E4A"};
+        
+        function getShoeSvg(category, color) {
+            const hex = COLOR_MAP[color.toLowerCase()] || '#8B7355';
+            if (category === 'Caballero' || category === 'Dama') {
+                return `<svg viewBox="0 0 200 200" width="180" height="180" style="max-width:100%; height:auto;">
+                    <path d="M60,180 L60,90 Q60,50 90,50 L110,50 Q140,50 140,90 L140,180 Z" fill="${hex}" opacity="0.9"/>
+                    <path d="M60,180 L60,90 Q60,50 90,50 L110,50 Q140,50 140,90 L140,180 Z" fill="none" stroke="#333" stroke-width="1" opacity="0.3"/>
+                    <ellipse cx="100" cy="185" rx="40" ry="8" fill="#1A1A1A" opacity="0.4"/>
+                </svg>`;
+            } else {
+                return `<svg viewBox="0 0 200 200" width="180" height="180" style="max-width:100%; height:auto;">
+                    <path d="M50,160 L50,80 Q50,40 80,40 L120,40 Q150,40 150,80 L150,160 Q150,180 100,180 Q50,180 50,160 Z" fill="${hex}" opacity="0.9"/>
+                    <ellipse cx="100" cy="165" rx="50" ry="10" fill="#1A1A1A" opacity="0.3"/>
+                </svg>`;
+            }
+        }
+
+        function getColorHex(color) {
+            return COLOR_MAP[color.toLowerCase()] || '#8B7355';
+        }
+
+        // Render products
+        const grid = document.getElementById('productsGrid');
+        const searchInput = document.getElementById('searchInput');
+        const seasonFilter = document.getElementById('seasonFilter');
+        const brandFilter = document.getElementById('brandFilter');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const resetBtn = document.getElementById('resetFiltersBtn');
+        const resultsCount = document.getElementById('resultsCount');
+
+        function renderProducts(items) {
+            grid.innerHTML = '';
+            items.forEach(item => {
+                const card = document.createElement('div');
+                card.className = `product-card ${item.brand.toLowerCase()}`;
+                card.dataset.sku = item.model;
+                card.dataset.name = (item.name || '').toLowerCase();
+                card.dataset.color = item.color.toLowerCase();
+                card.dataset.brand = item.brand.toLowerCase();
+                card.dataset.category = item.category.toLowerCase();
+                card.dataset.campaign = item.campaign.toLowerCase();
+
+                // Brand badge
+                const brandBadge = `<span class="brand-badge ${item.brand.toLowerCase()}">${item.brand}</span>`;
+
+                // Image
+                let imageHtml = '';
+                if (item.has_images && item.images.length > 0) {
+                    const firstImg = item.images[0];
+                    const marcaPath = item.brand === 'Flexi' ? 'flexi' : 'quirelli';
+                    imageHtml = `<img src="assets/${marcaPath}/catalogo/${item.model}/${firstImg}" alt="${item.name} ${item.model}" loading="lazy">`;
+                } else {
+                    imageHtml = `<div class="placeholder">${getShoeSvg(item.category, item.color)}<span>${item.name} ${item.model}</span><span style="font-size:0.7rem; color:#94A3B8;">Sin imagen disponible</span></div>`;
+                }
+
+                // Swatches - get all colors for this model
+                const modelColors = [...new Set(productsData.filter(p => p.model === item.model).map(p => p.color))];
+                const swatchesHtml = modelColors.map(c => 
+                    `<span class="color-swatch" style="background:${getColorHex(c)}" title="${c}"></span>`
+                ).join('');
+
+                // Status tags
+                const statusTags = [
+                    `<span class="status-tag status-inventario">En inventario</span>`
+                ];
+                if (item.has_images) {
+                    statusTags.push(`<span class="status-tag status-assets">${item.images.length} fotos</span>`);
+                } else {
+                    statusTags.push(`<span class="status-tag status-placeholder">Placeholder</span>`);
+                }
+
+                // WhatsApp link
+                const waText = encodeURIComponent(`Hola, me interesa comprar el modelo ${item.brand} ${item.name} (${item.model}) en color ${item.color} que vi en el Catálogo de Piedras Negras.`);
+                const waUrl = `https://wa.me/${STORE_WHATSAPP}?text=${waText}`;
+
+                card.innerHTML = `
+                    <div class="card-image">
+                        ${imageHtml}
+                    </div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            ${brandBadge}
+                            <span class="card-sku">SKU: ${item.model}</span>
+                        </div>
+                        <div class="card-name">${item.name} ${item.model}</div>
+                        <div class="card-meta">
+                            <span class="meta-item">📂 ${item.category}</span>
+                            ${item.page ? `<span class="meta-item">📄 Pág. ${item.page}</span>` : ''}
+                            <span class="meta-item">🧵 ${item.material}</span>
+                            <span class="meta-item">${item.campaign === 'OI26' ? '🍂 OI26' : '📦 Clásico'}</span>
+                        </div>
+                        <div class="card-colors">
+                            <span class="colors-label">Colores del modelo:</span>
+                            ${swatchesHtml}
+                        </div>
+                        <div class="card-footer">
+                            <div class="card-status">
+                                ${statusTags.join('')}
+                            </div>
+                            <a class="btn-whatsapp-card" href="${waUrl}" target="_blank">
+                                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                                Comprar
+                            </a>
+                        </div>
+                    </div>
+                `;
+
+                // Click on card opens modal (except WhatsApp link)
+                card.addEventListener('click', (e) => {
+                    if (!e.target.closest('.btn-whatsapp-card')) {
+                        openModal(item);
+                    }
+                });
+
+                grid.appendChild(card);
+            });
+            updateResultsCount(items.length);
+        }
+
+        function updateResultsCount(count) {
+            resultsCount.textContent = `${count} producto${count !== 1 ? 's' : ''} encontrado${count !== 1 ? 's' : ''}`;
+        }
+
+        function filterProducts() {
+            const query = searchInput.value.toLowerCase().trim();
+            const season = seasonFilter.value;
+            const brand = brandFilter.value;
+            const category = categoryFilter.value;
+
+            const filtered = productsData.filter(item => {
+                const matchesSearch = item.model.toLowerCase().includes(query) || 
+                                      (item.name || '').toLowerCase().includes(query) ||
+                                      item.color.toLowerCase().includes(query);
+                const matchesSeason = season === 'ALL' || item.campaign === season;
+                const matchesBrand = brand === 'ALL' || item.brand === brand;
+                const matchesCategory = category === 'ALL' || item.category === category;
+
+                return matchesSearch && matchesSeason && matchesBrand && matchesCategory;
+            });
+
+            renderProducts(filtered);
+        }
+
+        searchInput.addEventListener('input', filterProducts);
+        seasonFilter.addEventListener('change', filterProducts);
+        brandFilter.addEventListener('change', filterProducts);
+        categoryFilter.addEventListener('change', filterProducts);
+
+        resetBtn.addEventListener('click', () => {
+            searchInput.value = '';
+            seasonFilter.value = 'ALL';
+            brandFilter.value = 'ALL';
+            categoryFilter.value = 'ALL';
+            filterProducts();
+        });
+
+        // Modal
+        const modal = document.getElementById('modal');
+        const closeModal = document.getElementById('closeModal');
+
+        function openModal(item) {
+            document.getElementById('modalBrand').textContent = item.brand;
+            document.getElementById('modalBrand').className = `brand-badge ${item.brand.toLowerCase()}`;
+            document.getElementById('modalName').textContent = `${item.name} ${item.model}`;
+            document.getElementById('modalSku').textContent = `SKU: ${item.model} • Color: ${item.color}`;
+
+            // Main image
+            const mainImg = document.getElementById('modalMainImage');
+            const placeholder = document.getElementById('modalPlaceholder');
+            const goldSeal = document.getElementById('modalGoldSeal');
+            const thumbnails = document.getElementById('modalThumbnails');
+
+            if (item.has_images && item.images.length > 0) {
+                const marcaPath = item.brand === 'Flexi' ? 'flexi' : 'quirelli';
+                const firstImg = `assets/${marcaPath}/catalogo/${item.model}/${item.images[0]}`;
+                mainImg.src = firstImg;
+                mainImg.style.display = 'block';
+                placeholder.style.display = 'none';
+                goldSeal.style.display = item.campaign === 'OI26' ? 'block' : 'none';
+
+                // Thumbnails
+                thumbnails.innerHTML = item.images.map((img, idx) => {
+                    const src = `assets/${marcaPath}/catalogo/${item.model}/${img}`;
+                    return `<img class="modal-thumb ${idx === 0 ? 'active' : ''}" src="${src}" alt="${item.name} ${idx+1}" data-index="${idx}" onclick="changeModalImage(this, ${idx}, '${marcaPath}', '${item.model}')">`;
+                }).join('');
+            } else {
+                mainImg.style.display = 'none';
+                placeholder.style.display = 'flex';
+                placeholder.innerHTML = getShoeSvg(item.category, item.color);
+                goldSeal.style.display = item.campaign === 'OI26' ? 'block' : 'none';
+                thumbnails.innerHTML = '';
+            }
+
+            // Details
+            const waText = encodeURIComponent(`Hola, me interesa comprar el modelo ${item.brand} ${item.name} (${item.model}) en color ${item.color} que vi en el Catálogo de Piedras Negras.`);
+            const waUrl = `https://wa.me/${STORE_WHATSAPP}?text=${waText}`;
+            document.getElementById('modalWhatsApp').href = waUrl;
+
+            const modelColors = [...new Set(productsData.filter(p => p.model === item.model).map(p => p.color))];
+            const swatchesHtml = modelColors.map(c => 
+                `<span class="color-swatch" style="background:${getColorHex(c)}" title="${c}"></span>`
+            ).join('');
+
+            document.getElementById('modalDetails').innerHTML = `
+                <div class="detail-row"><span class="detail-label">Marca</span><span class="detail-value">${item.brand}</span></div>
+                <div class="detail-row"><span class="detail-label">Modelo</span><span class="detail-value">${item.name} (${item.model})</span></div>
+                <div class="detail-row"><span class="detail-label">Color</span><span class="detail-value">${item.color}</span></div>
+                <div class="detail-row"><span class="detail-label">Categoría</span><span class="detail-value">${item.category}</span></div>
+                <div class="detail-row"><span class="detail-label">Material</span><span class="detail-value">${item.material}</span></div>
+                <div class="detail-row"><span class="detail-label">Campaña</span><span class="detail-value">${item.campaign === 'OI26' ? 'Otoño Invierno 2026' : 'Línea Clásica'}</span></div>
+                ${item.page ? `<div class="detail-row"><span class="detail-label">Página catálogo</span><span class="detail-value">${item.page}</span></div>` : ''}
+                <div class="detail-row"><span class="detail-label">Multicolor</span><span class="detail-value">${item.multi}</span></div>
+                <div class="detail-row" style="border:none; margin-top:1rem;"><span class="detail-label">Colores disponibles</span></div>
+                <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:0.5rem;">${swatchesHtml}</div>
+                <div style="margin-top:1rem; padding:0.75rem; background:#F8FAFC; border-radius:8px; font-size:0.8rem; color:#64748B;">
+                    ${item.has_images ? `✅ ${item.images.length} imágenes reales disponibles` : '📷 Usando placeholder SVG - Imagen real pendiente'}
+                </div>
+            `;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function changeModalImage(thumb, index, marcaPath, model) {
+            document.querySelectorAll('.modal-thumb').forEach(t => t.classList.remove('active'));
+            thumb.classList.add('active');
+            const src = `assets/${marcaPath}/catalogo/${model}/${productsData.find(p => p.model === model && p.color === thumb.alt.split(' ').pop()).images[index]}`;
+            // Actually we need the correct image - let's use the thumb's src
+            document.getElementById('modalMainImage').src = thumb.src;
+        }
+
+        function closeModalFn() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        closeModal.addEventListener('click', closeModalFn);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModalFn(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModalFn(); });
+
+        // Initial render
+        filterProducts();
+    </script>
+</body>
+</html>
