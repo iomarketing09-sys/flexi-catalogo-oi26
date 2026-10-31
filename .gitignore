@@ -1,2 +1,5 @@
 __pycache__/
 *.py[cod]
+
+# Assets fuente locales del surtido OI26; respaldo en Drive, no en Git.
+assets/flexi/surtido_20261028/
