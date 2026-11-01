@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import io
 import json
+import os
 import re
 import shutil
 import sys
@@ -30,6 +31,16 @@ CATALOG_DRIVE = DRIVE / "Catalogo"
 MISSING = CATALOG_DRIVE / "assets faltantes "
 NEW_OI26 = CATALOG_DRIVE / "Assets Faltantes Campaña OI26"
 CLASSIC = CATALOG_DRIVE / "Assets Flexi Linea Clasica"
+BRANCH_PHOTOS = (
+    Path("/tmp/flexi_branch_photos")
+    if Path("/tmp/flexi_branch_photos").is_dir()
+    else CATALOG_DRIVE / "01_Nov_26 - Assets Faltantes (fotos sucursal)"
+)
+SURTIDO = (
+    Path("/tmp/flexi_surtido")
+    if Path("/tmp/flexi_surtido").is_dir()
+    else CATALOG_DRIVE / "28_Oct_26 - Surtido"
+)
 
 ANGLE_ORDER = (
     "ARRIBA_PAR",
@@ -51,6 +62,18 @@ EIGHT_VIEW_ORDER = (
     "INTERIOR",
     "ADELANTE",
     "ATRAS",
+)
+SURTIDO_ORDER = (
+    "ADELANTE",
+    "ATRAS",
+    "IZQ",
+    "DER",
+    "LATERAL",
+    "EXTERIOR",
+    "INTERIOR",
+    "ARRIBA_PAR",
+    "ABAJO_PAR",
+    "DER_PAR",
 )
 
 
@@ -101,7 +124,62 @@ def add_zip_series(
         add_path(images, brand, model, f"{model}_{color}_{number}.jpg", image_bytes_from_zip(archive, angle))
 
 
+def folder_photos(folder: Path) -> list[Path]:
+    if not folder.is_dir():
+        raise FileNotFoundError(folder)
+    return sorted(
+        path
+        for path in folder.rglob("*")
+        if path.is_file()
+        and path.suffix.lower() in {".jpg", ".jpeg", ".png"}
+        and "__MACOSX" not in path.parts
+        and not path.name.startswith("._")
+    )
+
+
+def add_folder_series(
+    images: dict[tuple[str, str], dict[str, Path | bytes]],
+    brand: str,
+    model: str,
+    color: str,
+    folder: Path,
+    *,
+    sources: list[Path] | None = None,
+) -> None:
+    files = list(sources) if sources is not None else folder_photos(folder)
+    for number, source in enumerate(files, start=1):
+        add_path(images, brand, model, f"{model}_{color}_{number}.jpg", source)
+
+
+def add_surtido_series(
+    images: dict[tuple[str, str], dict[str, Path | bytes]],
+    brand: str,
+    model: str,
+    color: str,
+    folder: Path,
+) -> None:
+    by_angle: dict[str, Path] = {}
+    for source in folder_photos(folder):
+        stem = source.stem.upper()
+        for angle in SURTIDO_ORDER:
+            if stem.endswith(f"_{angle}"):
+                by_angle[angle] = source
+                break
+    number = 1
+    for angle in SURTIDO_ORDER:
+        source = by_angle.get(angle)
+        if source is not None:
+            add_path(images, brand, model, f"{model}_{color}_{number}.jpg", source)
+            number += 1
+
+
 def source_images() -> dict[tuple[str, str], dict[str, Path | bytes]]:
+    if os.getenv("FLEXI_INCREMENTAL") == "1":
+        images: dict[tuple[str, str], dict[str, Path | bytes]] = {}
+        add_branch_photos(images)
+        add_surtido_photos(images)
+        return images
+
     images: dict[tuple[str, str], dict[str, Path | bytes]] = {}
 
     direct = {
@@ -207,7 +285,69 @@ def source_images() -> dict[tuple[str, str], dict[str, Path | bytes]]:
     }
     for name, source in arisha.items():
         add_path(images, "Quirelli", "306703", name, source)
+
+    add_branch_photos(images)
+    add_surtido_photos(images)
     return images
+
+
+def add_branch_photos(images: dict[tuple[str, str], dict[str, Path | bytes]]) -> None:
+    add_folder_series(images, "Flexi", "101905", "tan", BRANCH_PHOTOS / "101905 - Cafe")
+    add_folder_series(images, "Flexi", "101905", "negro", BRANCH_PHOTOS / "101905 - Negro")
+
+    amelia = BRANCH_PHOTOS / "101908 - Negro y Cafe"
+    amelia_files = folder_photos(amelia)
+    add_folder_series(images, "Flexi", "101908", "cafe", amelia, sources=amelia_files[:3])
+    add_folder_series(images, "Flexi", "101908", "negro", amelia, sources=amelia_files[3:])
+
+    add_folder_series(images, "Flexi", "402112", "negro", BRANCH_PHOTOS / "402112 - Negro")
+    add_folder_series(images, "Flexi", "404801", "oporto", BRANCH_PHOTOS / "404801 - Cafe")
+    add_folder_series(images, "Flexi", "404801", "negro", BRANCH_PHOTOS / "404801 - Negro")
+    add_folder_series(images, "Flexi", "414404", "negro", BRANCH_PHOTOS / "414404 - Negro")
+    add_folder_series(images, "Flexi", "48301", "negro", BRANCH_PHOTOS / "48301 - Negro")
+    add_folder_series(images, "Flexi", "48303", "negro", BRANCH_PHOTOS / "48303 - Negro")
+    add_folder_series(images, "Flexi", "5807", "blanco", BRANCH_PHOTOS / "5807 - Blanco")
+    add_folder_series(images, "Flexi", "50816", "negro", BRANCH_PHOTOS / "58016 - Negro")
+
+    quilmes = BRANCH_PHOTOS / "59305 - Cafe y Negro"
+    add_folder_series(
+        images, "Flexi", "59305", "dk_oporto", quilmes, sources=folder_photos(quilmes)[:4]
+    )
+
+    add_folder_series(images, "Flexi", "63201", "blanco", BRANCH_PHOTOS / "63201 - Blanco")
+    add_folder_series(images, "Flexi", "63202", "blanco", BRANCH_PHOTOS / "63202")
+    add_folder_series(
+        images,
+        "Flexi",
+        "66514",
+        "chocolate",
+        BRANCH_PHOTOS / "66514 - Cafe (flexi country)",
+    )
+    add_folder_series(images, "Quirelli", "700804", "negro", BRANCH_PHOTOS / "700804 - Negro")
+    add_folder_series(images, "Quirelli", "88701", "negro", BRANCH_PHOTOS / "88701 - Negro")
+
+    mocasin = BRANCH_PHOTOS / "88702 - Negro y Cafe"
+    mocasin_files = folder_photos(mocasin)
+    add_folder_series(images, "Quirelli", "88702", "brandy", mocasin, sources=mocasin_files[:3])
+    add_folder_series(images, "Quirelli", "88702", "negro", mocasin, sources=mocasin_files[3:])
+
+
+def add_surtido_photos(images: dict[tuple[str, str], dict[str, Path | bytes]]) -> None:
+    specs = (
+        ("Flexi", "104529", "negro", "104529_NEGRO"),
+        ("Flexi", "104834", "negro", "104834_NEGRO"),
+        ("Flexi", "137503", "negro", "137503_NEGRO"),
+        ("Flexi", "137511", "negro", "137511_NEGRO"),
+        ("Flexi", "142302", "cafe", "142302_CAFE"),
+        ("Flexi", "142302", "negro", "142302_NEGRO"),
+        ("Flexi", "142601", "tan", "142601_TAN"),
+        ("Quirelli", "307001", "black", "307001_BLACK"),
+        ("Quirelli", "307001", "taupe", "307001_TAUPE"),
+        ("Quirelli", "307103", "negro", "307103_NEGRO"),
+        ("Flexi", "37830", "negro", "37830_NEGRO"),
+    )
+    for brand, model, color, folder in specs:
+        add_surtido_series(images, brand, model, color, SURTIDO / folder)
 
 
 def update_products(source: str) -> tuple[str, list[dict[str, object]]]:
@@ -239,6 +379,37 @@ def update_products(source: str) -> tuple[str, list[dict[str, object]]]:
         ("Flexi", "424202", "Azul"): product_images("424202", "azul"),
         ("Flexi", "424202", "Negro"): product_images("424202", "negro"),
         ("Flexi", "424601", "Blanco"): product_images("424601", "blanco"),
+        ("Flexi", "101905", "Tan"): product_images("101905", "tan", 3),
+        ("Flexi", "101905", "Negro"): product_images("101905", "negro", 4),
+        ("Flexi", "101908", "Café"): product_images("101908", "cafe", 3),
+        ("Flexi", "101908", "Negro"): product_images("101908", "negro", 4),
+        ("Flexi", "402112", "Negro"): product_images("402112", "negro", 4),
+        ("Flexi", "404801", "Oporto"): product_images("404801", "oporto", 5),
+        ("Flexi", "404801", "Negro"): product_images("404801", "negro", 4),
+        ("Flexi", "414404", "Negro"): product_images("414404", "negro", 4),
+        ("Flexi", "48301", "Negro"): product_images("48301", "negro", 4),
+        ("Flexi", "48303", "Negro"): product_images("48303", "negro", 4),
+        ("Flexi", "5807", "Blanco"): product_images("5807", "blanco", 4),
+        ("Flexi", "50816", "Negro"): product_images("50816", "negro", 5),
+        ("Flexi", "59305", "DK Oporto"): product_images("59305", "dk_oporto", 4),
+        ("Flexi", "63201", "Blanco"): product_images("63201", "blanco", 4),
+        ("Flexi", "63202", "Blanco"): product_images("63202", "blanco", 5),
+        ("Flexi", "66514", "Chocolate"): product_images("66514", "chocolate", 4),
+        ("Quirelli", "700804", "Negro"): product_images("700804", "negro", 3),
+        ("Quirelli", "88701", "Negro"): product_images("88701", "negro", 3),
+        ("Quirelli", "88702", "Brandy"): product_images("88702", "brandy", 3),
+        ("Quirelli", "88702", "Negro"): product_images("88702", "negro", 6),
+        ("Flexi", "104529", "Negro"): product_images("104529", "negro", 10),
+        ("Flexi", "104834", "Negro"): product_images("104834", "negro", 10),
+        ("Flexi", "137503", "Negro"): product_images("137503", "negro", 9),
+        ("Flexi", "137511", "Negro"): product_images("137511", "negro", 10),
+        ("Flexi", "142302", "Café"): product_images("142302", "cafe", 10),
+        ("Flexi", "142302", "Negro"): product_images("142302", "negro", 10),
+        ("Flexi", "142601", "Tan"): product_images("142601", "tan", 10),
+        ("Quirelli", "307001", "Black"): product_images("307001", "black", 10),
+        ("Quirelli", "307001", "Taupe"): product_images("307001", "taupe", 10),
+        ("Quirelli", "307103", "Negro"): product_images("307103", "negro", 10),
+        ("Flexi", "37830", "Negro"): product_images("37830", "negro", 10),
     }
     for product in products:
         override = product_image_overrides.get((product["brand"], product["model"], product["color"]))
@@ -339,18 +510,26 @@ def apply_modal_presentation(html: str) -> str:
 
 
 def build() -> None:
+    print("Leyendo fuentes...", flush=True)
     image_sources = source_images()
     source = SOURCE_HTML.read_text(encoding="utf-8")
+    print("Actualizando catálogo...", flush=True)
     output_html, products = update_products(source)
     (REPO / "index.html").write_text(output_html, encoding="utf-8")
     shutil.copy2(SOURCE_SEAL, REPO / SOURCE_SEAL.name)
 
     assets = REPO / "assets"
-    if assets.exists():
-        shutil.rmtree(assets)
+    assets.mkdir(parents=True, exist_ok=True)
+    total = sum(len(files) for files in image_sources.values())
+    done = 0
     for (brand, model), files in image_sources.items():
         for name, source_file in files.items():
-            write_optimized(REPO / rel_asset_path(brand, model, name), source_file)
+            destination = REPO / rel_asset_path(brand, model, name)
+            if not (destination.exists() and destination.stat().st_size > 0):
+                write_optimized(destination, source_file)
+            done += 1
+            if done % 25 == 0 or done == total:
+                print(f"Imágenes: {done}/{total}", flush=True)
 
     referenced = []
     for product in products:
