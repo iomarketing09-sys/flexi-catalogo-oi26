@@ -271,7 +271,7 @@ def apply_model_grouping(html: str) -> str:
             return groups;
         }, {}));
         '''
-    anchor = '        const STORE_WHATSAPP = "5218781012084";'
+    anchor = '        const STORE_WHATSAPP = "5218781385284";'
     if anchor not in html:
         raise RuntimeError("No se encontró el punto de inserción para agrupar el catálogo.")
     html = html.replace(anchor, f"        {grouping}\n{anchor}", 1)
