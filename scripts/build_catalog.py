@@ -324,6 +324,7 @@ def add_branch_photos(images: dict[tuple[str, str], dict[str, Path | bytes]]) ->
         BRANCH_PHOTOS / "66514 - Cafe (flexi country)",
     )
     add_folder_series(images, "Quirelli", "700804", "negro", BRANCH_PHOTOS / "700804 - Negro")
+    add_folder_series(images, "Quirelli", "700803", "cafe", BRANCH_PHOTOS / "700803 - Cafe")
     add_folder_series(images, "Quirelli", "88701", "negro", BRANCH_PHOTOS / "88701 - Negro")
 
     mocasin = BRANCH_PHOTOS / "88702 - Negro y Cafe"
@@ -396,6 +397,7 @@ def update_products(source: str) -> tuple[str, list[dict[str, object]]]:
         ("Flexi", "63202", "Blanco"): product_images("63202", "blanco", 5),
         ("Flexi", "66514", "Chocolate"): product_images("66514", "chocolate", 4),
         ("Quirelli", "700804", "Negro"): product_images("700804", "negro", 3),
+        ("Quirelli", "700803", "Café"): product_images("700803", "cafe", 2),
         ("Quirelli", "88701", "Negro"): product_images("88701", "negro", 3),
         ("Quirelli", "88702", "Brandy"): product_images("88702", "brandy", 3),
         ("Quirelli", "88702", "Negro"): product_images("88702", "negro", 6),

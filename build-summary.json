@@ -1,9 +1,9 @@
 {
-  "inventory_variants": 86,
+  "inventory_variants": 87,
   "inventory_models": 63,
   "published_cards": 63,
-  "products_with_real_images": 81,
-  "referenced_image_paths": 581,
-  "unique_referenced_images": 527,
-  "generated_images": 528
+  "products_with_real_images": 82,
+  "referenced_image_paths": 583,
+  "unique_referenced_images": 529,
+  "generated_images": 530
 }
