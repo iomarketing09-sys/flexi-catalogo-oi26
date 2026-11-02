@@ -4,22 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catálogo Flexi & Quirelli · Piedras Negras 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;1,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --flexi-red: #D32F2F;
-            --flexi-dark: #111827;
-            --quirelli-gold: #C5A059;
-            --bg-light: #F8FAFC;
-            --border-color: #E2E8F0;
+            --flexi-red: #C9252D;
+            --flexi-dark: #191716;
+            --quirelli-gold: #9A7A3C;
+            --bg-light: #F3EEE5;
+            --surface: #FCFAF6;
+            --border-color: #D8D2C8;
             --whatsapp-green: #25D366;
             --whatsapp-dark: #128C7E;
+            --font-display: "Barlow Condensed", "Arial Narrow", sans-serif;
+            --font-body: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: var(--font-body);
         }
 
         body {
@@ -31,13 +37,13 @@
         }
 
         header {
-            background: linear-gradient(135deg, #090D16 0%, #111827 100%);
-            color: white;
+            background: rgba(243, 238, 229, 0.94);
+            color: var(--flexi-dark);
             position: sticky;
             top: 0;
             z-index: 40;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-            border-bottom: 1px solid #1E293B;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
         }
 
         .header-container {
@@ -57,59 +63,153 @@
         }
 
         .brand-logo-flexi {
-            background-color: var(--flexi-red);
-            color: white;
-            font-weight: 900;
-            font-size: 1.6rem;
-            letter-spacing: 2px;
-            padding: 0.35rem 1.1rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(211, 47, 47, 0.4);
+            color: var(--flexi-red);
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 2rem;
+            letter-spacing: -0.02em;
             font-style: italic;
+            line-height: 1;
         }
 
         .brand-logo-quirelli {
-            font-size: 1.25rem;
-            font-weight: 800;
-            letter-spacing: 1.5px;
-            color: var(--quirelli-gold);
-            background: rgba(30, 41, 59, 0.8);
-            padding: 0.35rem 1rem;
-            border-radius: 8px;
-            border: 1px solid rgba(197, 160, 89, 0.4);
-            font-family: 'Georgia', serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            color: var(--flexi-dark);
+            padding-left: 1rem;
+            border-left: 1px solid var(--border-color);
+            font-family: var(--font-display);
         }
 
         .location-tag {
-            color: #94A3B8;
+            color: #6E665B;
             font-size: 0.875rem;
-            border-left: 1px solid #334155;
+            border-left: 1px solid var(--border-color);
             padding-left: 1rem;
             font-weight: 600;
         }
 
         .hero {
-            background: #111827;
-            color: white;
-            padding: 2.2rem 1.5rem;
-            text-align: center;
-            border-bottom: 1px solid #334155;
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+            height: clamp(420px, 38vw, 520px);
+            background: var(--flexi-red);
+            color: var(--bg-light);
+            overflow: hidden;
+        }
+
+        .hero-copy {
+            padding: clamp(3rem, 6vw, 5rem) clamp(2rem, 5vw, 5rem) clamp(2rem, 4vw, 3.5rem) max(1.5rem, calc(50vw - 638.5px));
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-kicker {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+        }
+
+        .hero-kicker::before {
+            content: "";
+            width: 2.5rem;
+            height: 1px;
+            background: currentColor;
         }
 
         .hero h1 {
-            font-size: 2.1rem;
-            font-weight: 900;
-            letter-spacing: 1px;
-            margin-bottom: 0.4rem;
+            font-family: var(--font-display);
+            font-size: clamp(4.2rem, 7.5vw, 7.6rem);
+            font-weight: 800;
+            line-height: 0.78;
+            letter-spacing: -0.035em;
             text-transform: uppercase;
         }
 
-        .hero p {
-            color: #94A3B8;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        .hero h1 span,
+        .hero h1 em {
+            display: block;
+        }
+
+        .hero h1 em {
+            color: var(--bg-light);
+            font-style: italic;
             font-weight: 700;
+            letter-spacing: 0.015em;
+        }
+
+        @supports (-webkit-text-stroke: 1px currentColor) {
+            .hero h1 em {
+                color: transparent;
+                -webkit-text-stroke: 2px var(--bg-light);
+            }
+        }
+
+        .hero-note {
+            max-width: 28ch;
+            margin-top: 1.6rem;
+            color: rgba(243, 238, 229, 0.86);
+            font-size: 0.95rem;
+            line-height: 1.65;
+        }
+
+        .hero-product {
+            position: relative;
+            height: 100%;
+            margin: 0;
+            background: #E8DFD2;
+            overflow: hidden;
+        }
+
+        .hero-product::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(25, 23, 22, 0.12), transparent 28%);
+            pointer-events: none;
+        }
+
+        .hero-product img {
+            width: 100%;
+            height: 100%;
+            padding: 1.5rem;
+            object-fit: contain;
+            filter: saturate(0.96) contrast(1.02);
+        }
+
+        .hero-product figcaption {
+            position: absolute;
+            left: 1.5rem;
+            bottom: 1.5rem;
+            z-index: 1;
+            display: flex;
+            align-items: baseline;
+            gap: 0.8rem;
+            padding: 0.6rem 0.75rem;
+            background: rgba(252, 250, 246, 0.93);
+            color: var(--flexi-dark);
+            border: 1px solid rgba(25, 23, 22, 0.12);
+            font-size: 0.72rem;
+        }
+
+        .hero-product figcaption strong {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+        }
+
+        .hero-product figcaption span {
+            color: #6E665B;
+            font-weight: 600;
         }
 
         .controls-section {
@@ -120,7 +220,7 @@
         }
 
         .controls-card {
-            background: white;
+            background: var(--surface);
             border-radius: 16px;
             border: 1px solid var(--border-color);
             padding: 1.25rem;
@@ -212,7 +312,7 @@
         }
 
         .product-card {
-            background: white;
+            background: var(--surface);
             border-radius: 16px;
             overflow: hidden;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 6px rgba(0,0,0,0.03);
@@ -586,32 +686,73 @@
             .brand-group { gap: 0.5rem; }
 
             .brand-logo-flexi {
-                font-size: 1.25rem;
-                padding: 0.25rem 0.75rem;
+                font-size: 1.6rem;
+                padding: 0;
             }
 
             .brand-logo-quirelli {
-                font-size: 1rem;
-                padding: 0.25rem 0.7rem;
+                font-size: 0.95rem;
+                padding: 0 0 0 0.6rem;
             }
 
             .location-tag {
-                font-size: 0.7rem;
-                padding-left: 0.6rem;
+                display: none;
             }
 
             .hero {
-                padding: 1.15rem 1rem;
+                grid-template-columns: minmax(0, 1fr) 38vw;
+                height: clamp(260px, 64vw, 290px);
+            }
+
+            .hero-copy {
+                padding: 1.4rem 1rem 1.25rem;
+            }
+
+            .hero-kicker {
+                margin-bottom: 0.75rem;
+                font-size: 0.6rem;
+                letter-spacing: 0.1em;
+            }
+
+            .hero-kicker::before {
+                width: 1.2rem;
             }
 
             .hero h1 {
-                font-size: 1.45rem;
-                letter-spacing: 0.5px;
+                font-size: clamp(2.7rem, 13vw, 4.2rem);
+                letter-spacing: -0.02em;
+                line-height: 0.8;
             }
 
-            .hero p {
-                font-size: 0.62rem;
-                letter-spacing: 1.2px;
+            .hero-note {
+                max-width: 20ch;
+                margin-top: 0.8rem;
+                font-size: 0.7rem;
+                line-height: 1.45;
+            }
+
+            .hero-product {
+                min-height: 0;
+            }
+
+            .hero-product img {
+                padding: 0.5rem;
+            }
+
+            .hero-product figcaption {
+                left: 0.5rem;
+                bottom: 0.5rem;
+                gap: 0.35rem;
+                padding: 0.35rem 0.45rem;
+                font-size: 0.55rem;
+            }
+
+            .hero-product figcaption strong {
+                font-size: 0.72rem;
+            }
+
+            .hero-product figcaption span {
+                display: none;
             }
 
             .controls-section {
@@ -828,13 +969,21 @@
         /* Hidden */
         .hidden { display: none !important; }
 
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible {
+            outline: 3px solid var(--flexi-red);
+            outline-offset: 3px;
+        }
+
         /* Print */
         @media print {
             header, .controls-section, .card-footer, .btn-whatsapp-card, .modal { display: none !important; }
             .product-card { break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
             .products-grid { grid-template-columns: repeat(3, 1fr); }
             body { background: white !important; }
-            .hero { background: #111827 !important; -webkit-print-color-adjust: exact; }
+            .hero { background: var(--flexi-red) !important; -webkit-print-color-adjust: exact; }
         }
     </style>
 </head>
@@ -849,9 +998,16 @@
         </div>
     </header>
 
-    <section class="hero">
-        <h1>Catálogo Otoño Invierno 2026</h1>
-        <p>Inventario Confirmado en Sucursal</p>
+    <section class="hero" aria-labelledby="catalogTitle">
+        <div class="hero-copy">
+            <p class="hero-kicker">Piedras Negras, Coahuila</p>
+            <h1 id="catalogTitle"><span>Otoño</span><span>Invierno</span><em>2026</em></h1>
+            <p class="hero-note">Flexi y Quirelli, disponibles para probar en sucursal.</p>
+        </div>
+        <figure class="hero-product">
+            <img src="assets/flexi/catalogo/142801/142801_beige.jpg" alt="Botín Flexi Isaura en beige" width="1067" height="1600">
+            <figcaption><strong>Isaura</strong><span>Flexi · 142801</span></figcaption>
+        </figure>
     </section>
 
     <div class="controls-section">
